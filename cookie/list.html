@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表页</title>
+</head>
+<style>
+    /* {
+        margin:0;
+        padding:0;
+    }*/
+    body {
+        width: 100%;
+        height: 100%;
+        background: url("./img/back6.png");
+        padding-top: 50px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    #list {
+        width: 1500px;
+        height: 400px;
+        /* margin:100px auto; */
+        margin-left: 180px;
+        display: flex;
+        justify-content: space-around;
+
+    }
+
+    #list>li {
+        width: 250px;
+        height: 100%;
+
+    }
+
+    #list>li.box {
+        width: 250px;
+        height: 200px;
+        background: #000;
+    }
+
+    #list>p {
+        width: 100%;
+        height: 12.5%;
+        font-size: 14px;
+        line-height: 12.5%;
+        color: orange;
+        margin-top: 10px;
+
+    }
+
+    #list>li:hover {
+        box-shadow: 2px 2px 2px #ccc;
+        border: 1px solid #ccc;
+    }
+
+    #list li .price {
+        color: red;
+    }
+
+    #list li .title {
+        color: #FF5809;
+    }
+
+    #list li .from {
+        color: grey;
+    }
+
+
+    .btnList {
+        position: absolute;
+        top: 622px;
+        left: 800px;
+    }
+
+    .btnList a {
+        display: inline-block;
+        width: 50px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 5px;
+        text-align: center;
+    }
+
+    .btnList a:hover {
+        background: #ddd;
+    }
+</style>
+
+<body>
+    <ul id="list">
+
+    </ul>
+    <div class="btnList">
+        <a class="first" href="##">上一页</a><a class="last" href="##">下一页</a>
+    </div>
+</body>
+
+</html>
+<script src="../js/lib/common.js"></script>
+<script src="../js/lib/ajax.js"></script>
+<script>
+    var last = document.querySelector(".btnList>.last");
+    var oBtn = document.querySelector(".btnList");
+    var ofirst = document.querySelector(".first");
+    var iNow = 1;
+    axios({
+        mathod: "get",
+        url: "list.json",
+    }).then(function (data) {
+        //计算页码数
+        var pages = Math.ceil(data.length / 3);
+        for (var i = 0; i < pages; i++) {
+            var a = document.createElement("a");
+            a.innerText = i + 1;
+            a.className = "page";
+            oBtn.insertBefore(a, last);
+        }
+        render(1)
+        //渲染数据
+        function render(page) {
+            var str = "";
+            for (var i = (page - 1) * 3; i < Math.min(page * 3, data.length); i++) {
+                str += `<li data-id = ${data[i].id} >
+            <div>
+            <a href = "##"><img id = "img ${data[i].id} "src = ${data[i].img} ></a>
+            </div>
+            <p class = "price"> ${data[i].price}</p>
+            <p class = "title">  ${data[i].title} </p>
+            <p class = "commit">${data[i].commit} </p>
+            <p class = "from">${data[i].from} </p>
+            </li>`;
+            }
+            var oList = document.getElementById("list");
+            //动态添加内容
+            oList.innerHTML = str;
+        }
+
+        //点击页码切换数据
+        oBtn.addEventListener("click", function (e) {
+            var e = e || event;
+            var target = e.target || e.srcElement;
+
+            if (target.tagName == "A" && target.className == "page") {
+                var n = Number(target.innerText);
+                iNow = n;
+                render(n);
+            }
+        })
+
+        //点击上一页
+        ofirst.addEventListener("click", function () {
+            if (iNow == 1) {
+                iNow = 1;
+            } else {
+                iNow--;
+            }
+            render(iNow);
+        })
+
+        //点击下一页
+        last.addEventListener("click", function () {
+            if (iNow == pages) {
+                iNow = pages;
+            } else {
+                iNow++;
+            }
+            render(iNow);
+        })
+    })
+    // //定义一个空字符串
+    // var str = "";
+    // //遍历进行页面渲染
+    // for (var i = 0; i < phones.length; i++) {
+    //     str += '<li data-id = ' + phones[i].id + '><div><a href = "##"><img id = "img' + phones[i].id + '"src = ' +
+    //         phones[i].img + '></a></div><p class = "price">' + phones[i].price + '</p><p class = "title"> ' + phones[i]
+    //         .title + '</p><p class = "commit">' + phones[i].commit + '</p><p class = "from">' + phones[i].from +
+    //         '</p></li>';
+    // }
+    //获取到list
+    var oList = document.getElementById("list");
+    //动态添加内容
+    // oList.innerHTML = str;
+    oList.addEventListener("click", function () {
+        var e = e || event; //兼容
+        var target = e.target || e.srcElement; //target兼容
+        if (target.TagName = "IMG") { //如果点击到图片跳转页面到详情页
+            var id = target.parentNode.parentNode.parentNode.getAttribute("data-id");
+            location.href = "details1.html?id=" + id;
+        }
+    })
+</script>

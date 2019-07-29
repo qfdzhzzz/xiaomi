@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+// 封装  setCookie
+    function setCookie(key,val,expires){
+        var d = new Date();
+        d.setDate(d.getDate()+expires);
+        document.cookie = key+ "=" +val+";path=/;expires="+d;
+    }
+    // setCookie("goods","abc",3)
+    // setCookie("name","zhangsan",3)
+
+//封装 getCookie
+    function getCookie(key){
+        var cookies = document.cookie;
+        var arr = cookies.split("; ");
+        for(var i = 0;i<arr.length;i++){
+            var newArr = arr[i].split("=");
+            if(newArr[0] == key){
+                return newArr[1];
+            }
+        }
+
+    }
+    // console.log(document.cookie.split(";")[0].split("=")[1]);
+    // console.log(getCookie("goods"));
+    // 封装 removeCookie
+    function removeCookie(key){
+        setCookie(key,"",-1);
+    }
+    // removeCookie("goods");
+</script>

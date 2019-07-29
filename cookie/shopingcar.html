@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <style>
+        * {
+				margin: 0;
+				padding: 0;
+			}
+			body{
+                width:100%;
+                height:100%;
+                background: url("./img/back6.png") ;
+                padding-top:100px;
+                
+            }
+			a {
+				text-decoration: none;
+				font-size: 20px;
+				font-weight: 1000px;
+				color: #000;
+				line-height: 50px;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			.top {
+				width: 1500px;
+				height: 50px;
+				background: #fcfcfc;
+				margin: 0 auto;
+				transform: translateX(88px);
+			}
+			
+			.top a:nth-child(1) {
+				border-bottom: 1px solid red;
+			}
+			
+			.top a:nth-child(1):hover {
+				color: red;
+			}
+			
+			.top a:nth-child(2):hover {
+				color: red;
+				border-bottom: 1px solid red;
+			}
+			
+			.operate {
+				width: 1500px;
+				height: 50px;
+				background: #ccc;
+				transform: translateX(300px);
+				border-bottom: 2px solid #000;
+			}
+			
+			.operate input {
+				display: block;
+				width: 10%;
+				font-size: 20px;
+				;
+			}
+			
+			.operate ul {
+				width: 90%;
+				height: 50px;
+				display: flex;
+				float: right;
+				justify-content: space-around;
+			}
+			
+			.operate ul li {
+				width: 15%;
+			}
+			
+			#product {
+				width: 1500px;
+				/* height: 450px; */
+				transform: translateX(300px);
+			}
+			
+			#product div {
+				width: 1500px;
+				height: 33.33%;
+				border-bottom: 2px solid #ccc;
+			}
+			
+			#product div ul {
+				width: 90%;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+                
+			}
+			
+			#product div ul li input {
+				text-align: center;
+			}
+			#product div ul li img{
+                display: block;
+                height:150px;
+            }
+            #product div ul li:nth-child(2){
+                color:red;
+            }
+            #product div ul li:nth-child(3){
+                color:paleturquoise;
+            }
+			#count {
+				width: 1000px;
+				height: 50px;
+				transform: translateX(300px);
+			}
+			
+			#count input {
+				display: block;
+				margin-top: 20px;
+			}
+			
+			#count p {
+				display: block;
+				text-indent: 50px;
+				line-height: 50px;
+			}
+			
+			#count ul {
+				width: 80%;
+				float: right;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+		</style>
+</head>
+
+<body>
+    <div class="top">
+        <a href="#">全部商品</a>
+    </div>
+    <div class="operate">
+        <input type="checkbox" id="all">
+        <ul>
+            <li>全选</li>
+            <li>商品</li>
+            <li>单价</li>
+            <li>数量</li>
+            <li>小计</li>
+            <li>操作</li>
+        </ul>
+    </div>
+    <div id="product">
+        <!-- <div id="pro1">
+				<input type="checkbox" class="check">
+				<ul>
+					<li><img src="img/shouji1.jpg"></li>
+					<li>这个手机贼牛批</li>
+					<li>极光蓝</li>
+					<li>
+						单价:<span>￥899</span>
+					</li>
+					<li>
+						<button class="reduce">-</button>
+						<input type="text" value="0">
+						<button class="add">+</button>
+					</li>
+					<li>总价:￥0.00</li>
+					<li>
+						<a class="del" href="#">删除</a>
+					</li>
+				</ul>
+			</div>
+			<div id="pro2">
+				<input type="checkbox" class="check">
+				<ul>
+					<li><img src="img/shouji2.jpg"></li>
+					<li>这个手机贼牛批</li>
+					<li>极光蓝</li>
+					<li>单价:<span>￥5499</span></li>
+					<li>
+						<button class="reduce">-</button>
+						<input type="text" value="0">
+						<button class="add">+</button>
+					</li>
+					<li>总价:￥0.00</li>
+					<li>
+						<a class="del" href="#">删除</a>
+					</li>
+				</ul>
+			</div>
+			<div id=" pro3">
+				<input type="checkbox" class="check">
+				<ul>
+					<li><img src="img/shouji3.jpg"></li>
+					<li>这个手机贼牛批</li>
+					<li>极光蓝</li>
+					<li>单价:<span>￥1299</span></li>
+					<li>
+						<button class="reduce">-</button>
+						<input type="text" value="0">
+						<button class="add">+</button>
+					</li>
+					<li>总价:￥0.00</li>
+					<li>
+						<a class="del" href="#">删除</a>
+					</li>
+				</ul>
+			</div> -->
+    </div>
+    <div id="count">
+        <input type="checkbox" class="check">
+        <p>全选</p>
+        <ul>
+            <li>商品件数：<span id="goods"></span></li>
+            <li>
+                <p>总价:￥<span id="ALL"></span></p>
+            </li>
+            <li >
+                <a href="#">去结算</a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script src="cookie.js"></script>
+<script>
+    var phones = [
+        {
+            "id": "01",
+            "title2": "华为P30超感光三摄麒麟980AI智能芯片全面屏指纹手机",
+            "price": "￥9999",
+            "img": "img/1.jpg"
+        }, {
+            "id": "02",
+            "title2": "荣耀10青春版 2400万AI自拍 全网通版4GB+64GB 移动联通电信4G全面屏手机 双卡双待",
+            "price": "￥999",
+            "img": "img/2.jpg"
+        }, {
+            "id": "03",
+            "title2": "HUAWEI Mate20Pro 移动联通电信4G手机 双卡双待",
+            "price": "￥999",
+            "img": "img/3.jpg"
+        }, {
+            "id": "04",
+            "title2": "易烊千玺代言 HUAWEI 移动联通电信4G全面屏手机 双卡双待",
+            "price": "￥9999",
+            "img": "img/4.jpg"
+        }, {
+            "id": "05",
+            "title2": "HUAWEI Mate 20 全网通4G 双卡双待 全面屏拍照游戏智能手机",
+            "price": "￥5300",
+            "img": "img/5.jpg"
+        }
+    ]
+
+    if (getCookie("phones")) {
+        //如果从cookie中获取到phones这个key值
+        var obj = JSON.parse(getCookie("phones"));
+        var oProduct = document.getElementById("product");
+        var str = "";//定义空字符串 进行页面渲染
+        for (var i = 0; i < obj.length; i++) {
+            for (var j = 0; j < phones.length; j++) {
+                if (obj[i].id == phones[j].id) {//遍历判断如果对象中第i个id值与phones中id相等
+                    //进行页面渲染 
+                    str += `<div id="pro1">
+				<input type="checkbox" class="check" checked = "checked">
+				<ul>
+					<li><img src="${phones[j].img}"></li>
+					<li>${phones[j].title2}</li>
+					<li>极光蓝</li>
+					<li>
+						单价:<span>${phones[j].price}</span>
+					</li>
+					<li>
+						<button class="reduce">-</button>
+						<input type="text" value="${obj[i].num}">
+						<button class="add">+</button>
+					</li>
+					<li>总价:${(phones[j].price).slice(0, 1)}${(phones[j].price).slice(1) * (obj[i].num)}</li>
+					<li>
+						<a class="del" href="#">删除</a>
+                    </li>
+                    
+				</ul>
+			</div>`
+                }
+            }
+        }
+        oProduct.innerHTML += str;
+        saleAll();
+    }
+
+
+    //获取到加号
+    var aAdd = document.querySelectorAll(".add");
+    //获取到减号
+    var aReduce = document.querySelectorAll(".reduce");
+    //遍历add
+    for (var i = 0; i < aAdd.length; i++) {
+        aAdd[i].onclick = function () {
+            //  
+            var ul = document.querySelector("ul")
+            var Oul = ul.innerText;
+            //加号下面的物品数量value值++
+            this.previousElementSibling.value++;
+            // 因为￥写在数字前面  先获取到他的值（带￥号）
+            var str = this.parentNode.parentNode.children[3].children[0].innerText;
+            // 通过slice将￥后面的数字截取出来
+            var str1 = str.slice(1);
+            //价格等于 加号上一个元素的value值*单价
+            var sum = this.previousElementSibling.value * (Number(str1) * 10) / 10;
+            //找到小计位置 将总价赋值
+            this.parentNode.nextElementSibling.innerText = "总价:" + "￥" + sum;
+            // 每次进行某个商品的增加时都要调用saleAll函数 进行最底下商品总价的更改
+            saleAll();
+        }
+    }
+    // 遍历减号
+    for (var i = 0; i < aReduce.length; i++) {
+        aReduce[i].onclick = function () {
+            //每次点击减号 使得减号的下一个元素的value值--
+            this.nextElementSibling.value--;
+            if (this.nextElementSibling.value >= 0) {
+                //如果value>0 那么获取到他的单价
+                var str = this.parentNode.parentNode.children[3].children[0].innerText;
+                //截取出来数字
+                var str1 = str.slice(1);
+                //计算此时的小计
+                var result = this.nextElementSibling.value * (Number(str1) * 10) / 10;
+                this.parentNode.nextElementSibling.innerText = "总价:" + "￥" + result;
+            }
+            if (this.nextElementSibling.value < 0) {
+                //如果value值小于0时，value = 0 防止出现负数
+                this.parentNode.nextElementSibling.innerText = "总价:" + "￥" + 0;
+                this.nextElementSibling.value = 0;
+            }
+            //每次通过减号减少 value值都要调用saleAll函数进行商品数量以及总价的计算
+            saleAll();
+        }
+    }
+
+    var Del = document.querySelectorAll(".del")//获取到删除
+    for (var i = 0; i < Del.length; i++) {
+        //循环遍历删除 
+        Del[i].addEventListener("click", function () {
+            //添加事件监听 将删除的父元素的父元素删除
+            this.parentNode.parentNode.parentNode.remove();
+            //删除的同时调用salleAll函数
+            saleAll();
+        })
+
+    }
+    //获取到全选按钮
+    var oAll = document.getElementById("all");
+    //获取到单选按钮
+    var aCheck = document.querySelectorAll(".check");
+    //var 变量temp为0
+    var temp = 0;
+    // 给全选按钮添加事件监听click事件
+    oAll.addEventListener("click", function () {
+        // 当点击全选按钮时 temp++
+        temp++;
+        if (temp % 2 == 0) {
+            //如果点击次数为偶数 改变所选的div背景颜色
+            this.parentNode.nextElementSibling.style.background = randomColor();
+            // console.log(this.parentNode.nextElementSibling);
+        }
+        if (temp % 2 == 1) {
+            //如果点击次数为奇数，颜色为白色 表示取消选中
+            this.parentNode.nextElementSibling.style.background = "white";
+        }
+        for (var k = 0; k < aCheck.length; k++) {
+            // 只要全选按钮点击后，其他的单选按钮同时全部被选中
+            aCheck[k].checked = this.checked;
+
+        }
+        //同时调用saleAll函数计算商品数量和总价
+        saleAll();
+    })
+    var count = 0;
+    for (var i = 0; i < aCheck.length; i++) {
+        aCheck[i].addEventListener("click", function () {
+            var bStop = true;//设置开关门判断
+            count++;
+            if (count % 2 == 0) {
+                //改变选中后背景颜色
+                this.parentNode.style.background = randomColor();
+            }
+            if (count % 2 == 1) {
+                this.parentNode.style.background = "white";
+            }
+            for (var t = 0; t < aCheck.length; t++) {
+                //循环遍历单选按钮 如果有一个单选按钮没有被选中
+                if (!aCheck[t].checked) {
+                    bStop = false;
+                    break;
+                }
+            }
+            oAll.checked = bStop;// 全选按钮就不会被选中
+            //同时调用saleAll函数计算当前商品数量个总价 
+            saleAll();
+        })
+
+    }
+
+
+// 封装好 saleAll函数 以便于调用
+    function saleAll() {
+        var oGoods = document.querySelector("#goods");//获取到最后的数量
+        var aALL = document.querySelector("#ALL");//获取到最后的总价
+        var oDiv = document.querySelectorAll("#product>div");//获取到product下的所有div
+        var sum = 0;
+        var s1 = 0;//定义两个初始化变量
+
+        for (var i = 0; i < oDiv.length; i++) {
+            //遍历选中的商品坐在的div
+            var str = oDiv[i].children[1].children[5].innerText;
+            var str1 = str.slice(4);
+            // console.log(str1);
+
+            if (oDiv[i].children[0].checked) {
+                //计算此时总价和数量
+                sum += Number(oDiv[i].children[1].children[4].children[1].value);
+                s1 += Number(str1);
+                // console.log(sum);
+            }
+        }
+        oGoods.innerText = sum;//内容为总数sum
+        aALL.innerText = s1;//aAll总价为sum
+        // console.log(s1);
+    }
+    //去结算
+    
+</script>
